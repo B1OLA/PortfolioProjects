@@ -46,7 +46,7 @@ GROUP BY location
 ORDER BY totaldeathcount DESC;
 
 -- SHOWING CONTINENT WITH HIGHEST DEATH COUNT
-SELECT continent, MAX(CAST(total_deaths AS float)) AS TotalDeathCount
+SELECT continent, MAX(CAST(total_deaths AS float)) AS HighestDeathCount
 FROM coviddeaths
 WHERE continent != ''
 GROUP BY continent
