@@ -26,22 +26,31 @@ FROM coviddeaths
 ORDER BY location;
 
 -- Highest infection rate per population of each country
-SELECT location, population, MAX(total_cases), MAX((total_cases/population))*100 AS PercentPopulationInfected
+SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS PercentPopulationInfected
 FROM coviddeaths
 -- WHERE location like '%Nigeria%'
 GROUP BY location, population
 ORDER BY PercentPopulationInfected DESC;
 
+-- Highest infection rate per population of each country
+SELECT location, population, date, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS PercentPopulationInfected
+FROM coviddeaths
+-- WHERE location like '%Nigeria%'
+GROUP BY location, population, date
+ORDER BY PercentPopulationInfected DESC;
+
 -- Highest death count per population 
-SELECT location, MAX(CAST(total_deaths AS float)) AS TotalDeathCount
+SELECT location, MAX(CAST(total_deaths AS float)) AS HighestDeathCount
 FROM coviddeaths
 WHERE continent != ''
 GROUP BY location
 ORDER BY totaldeathcount DESC;
 
-SELECT location, MAX(CAST(total_deaths AS float)) AS TotalDeathCount
+-- Total death count per population 
+SELECT location, SUM(CAST(new_deaths AS float)) AS TotalDeathCount
 FROM coviddeaths
 WHERE continent = ''
+and location NOT IN ('World','European Union','International')
 GROUP BY location
 ORDER BY totaldeathcount DESC;
 
